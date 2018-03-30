@@ -1,8 +1,11 @@
+##############################################################################################################
 Team: Ryan Pencak, Evan Harrington, Uttam Kumaran, and Peyton Rumachik
 Project: MIPS Pipelined Processor
+##############################################################################################################
 
-
+--------------------------------------------------------------------------------------------------------------
 File Structure:
+--------------------------------------------------------------------------------------------------------------
 
   The main (testbench) file is CPU.v
 
@@ -14,8 +17,9 @@ File Structure:
 
   test -- contains folders for each of the three required tests and an executable file for each in Compiled_CPU
 
-
+--------------------------------------------------------------------------------------------------------------
 Compilation and Execution:
+--------------------------------------------------------------------------------------------------------------
 
   To Compile and Run Hello-World:
     Open Instruction_Memory.v and uncomment the readmemh line for Hello-World.
@@ -29,8 +33,9 @@ Compilation and Execution:
     Open Instruction_Memory.v and uncomment the readmemh line for Test-3.
     In terminal, run 'iverilog -o CPU.v test_three_output'
 
-
+--------------------------------------------------------------------------------------------------------------
 Design:
+--------------------------------------------------------------------------------------------------------------
 
   The design for this project was based on the single cycle MIPS processor and adapted to allow for forwarding and hazard detection.
 
@@ -46,8 +51,9 @@ Design:
 
   Another issue that was resolved was the timing of reading and writing on the clock. Reading of registers now occurs on the negative edge of the clock while writing to registers waits for the positive edge of the clock. In Data_Memory, reads occur on the positive edge and writing occurs on the negative edge. Both of these operations are delayed one time unit to ensure all wires have the appropriate values. This results in using a clock that cycles every ten time units to make sure everything can execute properly in each clock cycle.
 
-
+--------------------------------------------------------------------------------------------------------------
 Testing:
+--------------------------------------------------------------------------------------------------------------
 
   For this project, testing involved compiling and monitoring the contents of each wire closely with GTK Wave.
   Instructions were added a few at a time before the program was compiled and debugged for errors.
