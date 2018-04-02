@@ -1,10 +1,10 @@
+// Third test written in C to include 28 MIPS instructions
+
 #include <stdio.h>
 
 extern int puts(const char *str);
-extern int puts2(const int);
 
-// basic non-optimized recusive fibonacci generator
-int fibonacci(int n)
+int third_test(int x)
 {
    if ( n == 0 )
       return 0;
@@ -16,10 +16,8 @@ int fibonacci(int n)
 
 int main(void)
 {
-    char s[128]= {0};
-    int f = fibonacci(1846);
+    int test_output = third_test(10);
     puts("Result is:");
-    puts2(f);
+    puts(test_output);
     puts("\n");
-
 }

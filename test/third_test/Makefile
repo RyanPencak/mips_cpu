@@ -10,16 +10,16 @@ SREC=srec_cat
 # these are the flags we need for bare metal code generation
 CFLAGS=-mno-abicalls -fpic -nostdlib -static
 LDFLAGS=-L/usr/remote/mipsel/lib/gcc/mipsel-buildroot-linux-uclibc/4.6.3 -lgcc
-ASMSOURCE=puts.s puts2.s start.s
-CSOURCE=fib.c memset.c itoa.c
+# ASMSOURCE=puts.s start.s
+CSOURCE=third_test.c
 
 ASMOBJ=$(ASMSOURCE:.s=.o)
 COBJ=$(CSOURCE:.c=.o)
 OBJECTS=$(ASMOBJ) $(COBJ)
 
-BIN_OUTPUT=fib
-GCC_OUTPUT=fib.s
-VERILOG_OUTPUT=fib.v
+BIN_OUTPUT=third_test
+GCC_OUTPUT=third_test.s
+VERILOG_OUTPUT=third_test.v
 
 all: $(OBJECTS)
 	# finally build an executable
