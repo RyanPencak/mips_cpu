@@ -2,10 +2,11 @@
 // alu.v
 
 /* alu module: handles input from registers and output to data memory */
-module ALU(reg1, reg2, ALUop,
+module ALU(shamt, reg1, reg2, ALUop,
           ALUresult);
 
   /* declare inputs */
+  input [4:0] shamt;
   input [31:0] reg1;
   input [31:0] reg2;
   input [4:0] ALUop;
@@ -39,12 +40,12 @@ module ALU(reg1, reg2, ALUop,
         ALUresult = {reg2, 16'b0};
       5'b00100: // MFLO
       begin
-        $display("Contents of lo: %08x", lo);
+        // $display("Contents of lo: %08x", lo);
         ALUresult = lo;
       end
       5'b00101: // MFHI
       begin
-        $display("Contents of hi: %08x", hi);
+        // $display("Contents of hi: %08x", hi);
         ALUresult = hi;
       end
       5'b00110: //SUB
@@ -57,12 +58,12 @@ module ALU(reg1, reg2, ALUop,
             ALUresult = 0;
         end
       5'b01000: //SLL
-        ALUresult = reg1 << reg2;
+        ALUresult = reg1 << shamt;
       5'b01001: //SRA
-        ALUresult = reg1 >> reg2;
+        ALUresult = reg1 >> shamt;
       5'b01010: // DIV
         begin
-          $display("\n\nDividing %08x by %08x\n\n", reg1, reg2);
+          // $display("\n\nDividing %08x by %08x\n\n", reg1, reg2);
           HiLo = reg1/reg2;
           lo = HiLo[31:0];
           hi = HiLo[63:32];

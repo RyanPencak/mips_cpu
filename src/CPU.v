@@ -87,6 +87,7 @@ module testbench;
       wire [31:0] WriteData_E;
       wire [31:0] SrcBE;
       wire [31:0] ALUOut_E;
+      wire [4:0] Shamt_E;
 
       // pipeline signals
       wire [6:0] EX_E;
@@ -200,7 +201,7 @@ module testbench;
     /* Pipeline */
 
       // ID to EX Pipeline
-      ID_EX IdEx(clk, jump, FlushE, EX_D, MEM_D, WB_D, instr_D[25:21], instr_D[20:16], instr_D[15:11], RD1_D, RD2_D, signImm_D, EX_E, MEM_E, WB_E, Rs_E, Rt_E, Rd_E, RD1_E, RD2_E, signImm_E);
+      ID_EX IdEx(clk, jump, FlushE, EX_D, MEM_D, WB_D, instr_D[25:21], instr_D[20:16], instr_D[15:11], RD1_D, RD2_D, signImm_D, instr_D[10:6] /*Shamt_D*/, EX_E, MEM_E, WB_E, Rs_E, Rt_E, Rd_E, RD1_E, RD2_E, signImm_E, Shamt_E);
 
 
     /* EX Stage */
@@ -218,7 +219,7 @@ module testbench;
       Mux_2_1_32bit aluMux(EX_E[`ALUSRC], WriteData_E, signImm_E, SrcBE);
 
       // execute alu block and output result
-      ALU ALU_block(SrcAE, SrcBE, EX_E[`ALUOP], ALUOut_E);
+      ALU ALU_block(Shamt_E, SrcAE, SrcBE, EX_E[`ALUOP], ALUOut_E);
 
 
     /* Pipeline */
