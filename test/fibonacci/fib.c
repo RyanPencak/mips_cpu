@@ -19,7 +19,7 @@ int main(void)
     char s[128]= {0};
     int f = fibonacci(1846);
     puts("Result is:");
-    puts2(f);
+    puts(itoa(f));
     puts("\n");
 
 }
