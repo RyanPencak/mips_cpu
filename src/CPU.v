@@ -1,5 +1,3 @@
-// Main File
-
 /* include external module files */
 `include "../include/mips.h"
 `include "PC.v"
@@ -21,6 +19,7 @@
 `include "EX_MEM.v"
 `include "MEM_WB.v"
 `include "Hazard_Unit.v"
+`include "printer.v"
 
 
 /* testbench module */
@@ -57,9 +56,11 @@ module testbench;
 
       // registers
       wire [31:0] v0;
+      wire [31:0] v1;
       wire [31:0] a0;
       wire [31:0] ra;
       wire [31:0] sp;
+      wire [31:0] fp;
 
       // pipeline signals
       wire [6:0] EX_D;
@@ -122,6 +123,11 @@ module testbench;
       wire [1:0] ForwardAE;
       wire [1:0] ForwardBE;
 
+    /* string printing */
+      wire [31:0] strAddr;
+      wire [31:0] str;
+      wire print;
+
 
     /* Hazard Unit */
 
@@ -147,7 +153,7 @@ module testbench;
       PC PC_block(clk, StallF, Next_PC, PC_F);
 
       // get instruction from memory
-      Instruction_Memory instructionMemory(PC_F, instr_F, number_instructions);
+      Instruction_Memory instructionMemory(PC_F, strAddr, instr_F, number_instructions, str);
 
       // add 4 to pc for next pc
       Add4 PCadd4(PC_F, PCPlus4_F);
@@ -165,7 +171,7 @@ module testbench;
       Control control_block(instr_D, EX_D, MEM_D, WB_D, jump, BranchD, syscall_control, jr_control, jal_control, BranchOp);
 
       // execute registers block for read data outputs
-      Registers reg_block(clk, jal_control, PC_D+8 /*JAL*/, instr_D[25:21], instr_D[20:16], writeReg_W, Result_W, WB_D[`REGWRITE], WB_W[`REGWRITE], RD1_D, RD2_D, v0, a0, ra, sp);
+      Registers reg_block(clk, jal_control, PC_D+8 /*JAL*/, instr_D[25:21], instr_D[20:16], writeReg_W, Result_W, WB_D[`REGWRITE], WB_W[`REGWRITE], RD1_D, RD2_D, v0, v1, a0, ra, sp, fp);
 
       // mux for RD1
       Mux_2_1_32bit MuxRD1(ForwardAD, RD1_D, ALUOut_M, And_Input1);
@@ -186,8 +192,10 @@ module testbench;
       Adder branchAdder(PCPlus4_D, signImm_D, PCBranch_D);
 
       // execute syscall if control signal is set based on v0 and a0
-      Syscall testSyscall(syscall_control, sysstall, v0, a0, stat_control);
+      Syscall testSyscall(syscall_control, sysstall, v0, a0, stat_control, print);
 
+      // execute printing if syscall outputs a 1 for print
+      Printer printer(str, print, a0, strAddr);
 
     /* Pipeline */
 
@@ -257,9 +265,9 @@ module testbench;
       $dumpfile("testbench.vcd");
       $dumpvars(0,testbench);
 
-      // $monitor($time, " in %m, currPC = %08x, nextPC = %08x, instruction = %08x, ALUOut_E = %08x, ALUOut_M = %08x, ALUOut_W = %08x, readData_M = %08x, readData_W = %08x, EqualD = %01d, PCSrc_D = %01d, StallF = %01d, BranchD=%1d, jr_control=%d, jal_control=%d, ra=%08x, sp=%08x\n", PC_F, Next_PC, instr_F, ALUOut_E, ALUOut_M, ALUOut_W, readData_M, readData_W, EqualD, PCSrc_D, StallF, BranchD, jr_control, jal_control, ra, sp);
+      // $monitor($time, " in %m, currPC = %08x, nextPC = %08x, instruction = %08x, v0: %x, v1: %x, fp: %x\n", PC_F, Next_PC, instr_F, v0, v1, fp);
 
-      #5000 $finish;
+      #10000 $finish;
 
     end
 

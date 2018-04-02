@@ -16,6 +16,7 @@ module ALU(reg1, reg2, ALUop,
   /* declare lo and hi registers */
   reg [31:0] lo;
   reg [31:0] hi;
+  reg [63:0] HiLo;
 
   initial begin
     lo = 32'b0;
@@ -37,9 +38,15 @@ module ALU(reg1, reg2, ALUop,
       5'b00011: //LUI
         ALUresult = {reg2, 16'b0};
       5'b00100: // MFLO
+      begin
+        $display("Contents of lo: %08x", lo);
         ALUresult = lo;
+      end
       5'b00101: // MFHI
+      begin
+        $display("Contents of hi: %08x", hi);
         ALUresult = hi;
+      end
       5'b00110: //SUB
         ALUresult = reg1 - reg2;
       5'b00111: //SLT
@@ -55,8 +62,12 @@ module ALU(reg1, reg2, ALUop,
         ALUresult = reg1 >> reg2;
       5'b01010: // DIV
         begin
-          lo = reg1 / reg2;
-          hi = reg1 % reg2;
+          $display("\n\nDividing %08x by %08x\n\n", reg1, reg2);
+          HiLo = reg1/reg2;
+          lo = HiLo[31:0];
+          hi = HiLo[63:32];
+          // lo = reg1 / reg2;
+          // hi = reg1 % reg2;
         end
       5'b01101: // MOVZ
         begin
