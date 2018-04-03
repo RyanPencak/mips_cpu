@@ -1,22 +1,28 @@
+This file documents the instructions used in the third test that was developed to test our code.
+The instructions here not used in fibonacci are XOR, XORI, SLTIU, and LB.
+
 80000004 - LB $zero 0x0004 $zero
 24020004 - ADDIU $v0 $zero 0x0004
 0000000C - SYSCALL
 03E00008 - JR $ra
 3C1D7FFF - LUI $sp 0x7FFF
-0C10005D - JAL 0x010005D
+0C100083 - JAL 0x0100083
 37BDFFFC - ORI $sp $sp 0xFFFC
-0000000C - SYSCALL
 27BDFF90 - ADDIU $sp $sp 0xFF90
 AFBF006C - SW $ra 0x006C $sp
 03A0F021 - ADDU $fp $sp $zero
 8FC20070 - LW $v0 0x0070 $fp
-00021040 - SLL $v0 $v0 0x0undefined
+00021880 - SLL $v1 $v0 0x0undefined
 14400002 - BNE $v0 $zero 0x0002
 0062001A - DIV $v1 $v0
 0007000D - BREAK
 00001810 - MFHI $v1
 00001012 - MFLO $v0
-AFC20014 - SW $v0 0x0014 $fp
-10000003 - BEQ $zero $zero 0x0003
+10620005 - BEQ $v1 $v0 0x0005
+38420009 - XORI $v0 $v0 0x0009
+2C420001 - SLTIU $v0 $v0 0x0001
+304300FF - ANDI $v1 $v0 0x00FF
+8FC20070 - LW $v0 0x0070 $fp
+00621026 - XOR $v0 $v1 $v0
 0062102A - SLT $v0 $v1 $v0
 0000000A - MOVZ $zero $zero $zero

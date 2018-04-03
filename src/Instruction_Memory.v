@@ -21,10 +21,13 @@ module Instruction_Memory(currPC, strAddr,
     // $readmemh("../test/add_test/add_test.v", mem);
 
     /* UNCOMMENT THIS TO COMPILE HELLO_WORLD */
-    // $readmemh("../test/hello_world/hello.v", mem);
+    $readmemh("../test/hello_world/hello.v", mem);
 
     /* UNCOMMENT THIS TO COMPILE FIBONACCI */
-    $readmemh("../test/fibonacci/fib.v", mem);
+    // $readmemh("../test/fibonacci/fib.v", mem);
+
+    /* UNCOMMENT THIS TO COMPILE TEST 3 */
+    // $readmemh("../test/third_test/third_test.v", mem);
 
     number_instructions = 0; // initial statistic
   end

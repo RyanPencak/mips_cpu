@@ -17,7 +17,9 @@ File Structure:
 
   src -- contains all Verilog modules including main CPU.v file
 
-  test -- contains folders for each of the three required tests and an executable file for each in Compiled_CPU
+  test -- contains folders for each of the three required tests
+  
+  test/'test_name'/Executable -- contains an executable file for that program to run with ./executable_name
 
 --------------------------------------------------------------------------------------------------------------
 Compilation and Execution:
