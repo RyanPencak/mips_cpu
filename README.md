@@ -18,7 +18,7 @@ File Structure:
   src -- contains all Verilog modules including main CPU.v file
 
   test -- contains folders for each of the three required tests
-  
+
   test/'test_name'/Executable -- contains an executable file for that program to run with ./executable_name
 
 --------------------------------------------------------------------------------------------------------------
@@ -28,14 +28,17 @@ Compilation and Execution:
   To Compile and Run Hello-World:
     Open Instruction_Memory.v and uncomment the readmemh line for Hello-World.
     In terminal, run 'iverilog -o CPU.v add_test_output'
+    Execute add_test_output with './add_test_output'
 
   To Compile and Run Fibonacci:
     Open Instruction_Memory.v and uncomment the readmemh line for Fibonacci.
     In terminal, run 'iverilog -o CPU.v fib_test_output'
+    Execute fib_test_output with './fib_test_output'
 
   To Compile and Run Test-3:
     Open Instruction_Memory.v and uncomment the readmemh line for Test-3.
     In terminal, run 'iverilog -o CPU.v test_three_output'
+    Execute test_three_output with './test_three_output'
 
 --------------------------------------------------------------------------------------------------------------
 Design:
